@@ -16,6 +16,14 @@ F3::^c ; Ctrl + c
 F4::^v ; Ctrl + v
 F5::^x ; Ctrl + x
 
+; Tìm kiếm google đoạn text được chọn
+F9::
+{
+    Send "^c"
+    Sleep 50
+    Run "http://google.com/search?q=" . A_Clipboard
+}
+
 RCtrl & l::Suspend ; Đổi phím góc trên cùng bên phải thành tạm dừng AutoHotkey
 RCtrl & m::Reload ; Đổi phím FAST/Break thành load lại script
 

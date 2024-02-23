@@ -26,17 +26,37 @@ F8::^y ; Ctrl + y (Redo)
 ; Tìm kiếm google đoạn text được chọn
 F9::
 {
-    Send "^c"
-    Sleep 50
-    Run "http://google.com/search?q=" . A_Clipboard
+    try {
+        Send "^c"
+        Sleep 50
+        if (DllCall("IsClipboardFormatAvailable", "uint", 1)) ; Kiểm tra xem có phải copy text không
+        {
+            Run "http://google.com/search?q=" . A_Clipboard
+        }
+        else
+            return
+    } catch as e {
+        MsgBox "Có lỗi phát sinh khi xử lý `n" e.Message
+        return
+    }
 }
 
 ; Mở browser/explorer đoạn text được chọn
 F10::
 {
-    Send "^c"
-    Sleep 50
-    Run A_Clipboard
+    try {
+        Send "^c"
+        Sleep 50
+        if (DllCall("IsClipboardFormatAvailable", "uint", 1)) ; Kiểm tra xem có phải copy text không
+        {
+            Run A_Clipboard
+        }
+        else
+            return
+    } catch as e {
+        MsgBox "Không thể mở ứng dụng hoặc tài liệu, đối tượng chọn phải là URL hoặc đường dẫn", "Lỗi"
+        return
+    }
 }
 
 RCtrl & l::DllCall("LockWorkStation") ; Đổi phím góc trên cùng bên phải thành lock screen

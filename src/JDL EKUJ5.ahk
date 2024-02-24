@@ -23,39 +23,28 @@ F6::^x ; Ctrl + x (Cut)
 F7::^z ; Ctrl + z (Undo)
 F8::^y ; Ctrl + y (Redo)
 
-; Tìm kiếm google đoạn text được chọn
+/*
+    Mở browser hoặc explorer đoạn text được bôi đen
+    Nếu không thể mở thì tìm kiếm đoạn text trên google
+*/
 F9::
 {
     try {
-        Send "^c"
-        Sleep 50
-        if (DllCall("IsClipboardFormatAvailable", "uint", 1)) ; Kiểm tra xem có phải copy text không
+        Send "^c" ; Copy
+        Sleep 50 ; Chờ lệnh copy xử lý
+        CurrentClipboard := A_Clipboard ; Gán clipboard vào biến
+        if (DllCall("IsClipboardFormatAvailable", "uint", 1)) ; Clipboard là text
         {
-            Run "http://google.com/search?q=" . A_Clipboard
-        }
-        else
+            if (SubStr(CurrentClipboard, 1, 2) == "\\") ; Không xử lý nếu text bắt đầu bằng \\
+                return
+            else if (RegExMatch(CurrentClipboard, "^[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)")) ; URL không bắt đầu bằng http hoặc https hoặc www.
+                Run "http://" . CurrentClipboard
+            else ; AutoHotkey xử lý mặc định
+                Run CurrentClipboard
+        } else ; Không xử lý những đối tượng được copy không phải text
             return
-    } catch as e {
-        MsgBox "Có lỗi phát sinh khi xử lý `n" e.Message
-        return
-    }
-}
-
-; Mở browser/explorer đoạn text được chọn
-F10::
-{
-    try {
-        Send "^c"
-        Sleep 50
-        if (DllCall("IsClipboardFormatAvailable", "uint", 1)) ; Kiểm tra xem có phải copy text không
-        {
-            Run A_Clipboard
-        }
-        else
-            return
-    } catch as e {
-        MsgBox "Không thể mở ứng dụng hoặc tài liệu, đối tượng chọn phải là URL hoặc đường dẫn", "Lỗi"
-        return
+    } catch as e { ; Nếu không xử lý được thì tìm kiếm trên google
+        Run "http://google.com/search?q=" . CurrentClipboard
     }
 }
 

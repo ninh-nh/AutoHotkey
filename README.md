@@ -17,7 +17,7 @@ Các tính năng chính của script:
 ## Tải AutoHotkey
 
 - Từ trang chủ: https://www.autohotkey.com/download/ (Chọn bản ZIP)
-- Có thể sử dụng phiên bản portable trong thư mục src/app
+- Có thể sử dụng phiên bản portable trong thư mục [src/app](src/app)
 
 ## Cài đặt AutoHotkey
 

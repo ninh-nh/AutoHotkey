@@ -15,7 +15,7 @@
  *******************************/
 
 F1::` ; Đổi F1 thành `
-<^F1::Esc ; ESC
+<^F1::Send("{Esc}") ; ESC
 <^F2::^s ; Ctrl + s (Save)
 <^F3::^f ; Ctrl + f (Find)
 <^F4::^+f ; Ctrl + Shift + f (Find in file)
@@ -34,7 +34,7 @@ SC070::^/ ; Ctrl + / (Line comment)
 SC079::Send("/**{Enter}") ; Create block comment
 
 >^l::DllCall("LockWorkStation") ; Đổi phím góc trên cùng bên phải thành lock screen
->^m::Media_Play_Pause ; Đổi phím FAST/Break thành tạm dừng phát media
+>^m::Send("{Media_Play_Pause}") ; Đổi phím FAST/Break thành tạm dừng phát media
 <^CtrlBreak::!F4 ; Fn + FAT/Break thành Alt + F4 (Close app)
 
 <+Space::^Space ; Đổi phím 1/2 Space thành Ctrl + Space
@@ -47,7 +47,10 @@ RCtrl & j::Ctrl ; Đổi phím cạnh Shift phải thành Ctrl
 RCtrl & f::NumLock ; Numlock có thể bấm độc lập hoặc kèm phím fn để tắt/bật
 <+SC070::!z ; Đổi phím KANA thành Alt + z (Tắt/bật Unikey)
 `::#v ; Đổi phím Half-width/full-width thành Win + v (Clipboard history)
-<^<+SC079::#e
+<^<+SC079::#e ; Đổi phím góc dưới bên phải thành Win + e (Explorer)
+<!Esc::#Tab ; Đổi phím F15 thành Win + Tab (Task View)
+PgUp::^#Right ; Đổi phím Page Up thành Ctrl + Win + Right (Switch desktop to the right)
+PgDn::^#Left ; Đổi phím Page Up thành Ctrl + Win + Left (Switch desktop to the left)
 NumpadDiv::/ ; Đổi phím / (Đang là numpad /) thành phím /?
 NumpadClear::Down ; Đổi phím số 5 bên NumPad thành Down
 
